@@ -73,6 +73,11 @@ class MainActivity : AppCompatActivity() {
         Log.d("LOGNYA", "onStart()")
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d("LOGNYA", "onPause()")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
