@@ -12,18 +12,32 @@ import id.ac.ui.cs.mobileprogramming.kevinraikhanzain.mobileprogramminglab.utili
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    val frontPageFragmnt = FrontPageFragment()
+    val detailPageFragmnt = DetailFragment()
+    lateinit var viewModel: QuestionsViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        this.replaceFragment(FrontPageFragment())
+        val factory = InjectorUtils.provideQuestionViewModelFactory()
+        val viewModel = ViewModelProviders.of(this, factory).get(QuestionsViewModel::class.java)
+        frontPageFragmnt.setViewModel(viewModel)
+        detailPageFragmnt.setViewModel(viewModel)
+        this.replaceFragment(frontPageFragmnt, false)
+    }
+
+    fun replaceFragmentWithDetail() {
+        replaceFragment(detailPageFragmnt, true)
     }
 
      // Extension function to replace fragment
-    fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment, isAddThisToBackStack: Boolean) {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.constraintHome, fragment)
-        transaction.addToBackStack(null)
+         if (isAddThisToBackStack) {
+             transaction.addToBackStack(null)
+         }
         transaction.commit()
     }
 
