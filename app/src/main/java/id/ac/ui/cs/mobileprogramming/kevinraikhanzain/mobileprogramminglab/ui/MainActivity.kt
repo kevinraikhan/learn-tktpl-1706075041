@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val factory = InjectorUtils.provideQuestionViewModelFactory()
-        val viewModel = ViewModelProviders.of(this, factory).get(QuestionsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory).get(QuestionsViewModel::class.java)
         frontPageFragmnt.setViewModel(viewModel)
         detailPageFragmnt.setViewModel(viewModel)
         this.replaceFragment(frontPageFragmnt, false)

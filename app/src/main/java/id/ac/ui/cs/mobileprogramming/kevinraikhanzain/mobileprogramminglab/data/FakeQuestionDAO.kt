@@ -18,21 +18,4 @@ class FakeQuestionDAO {
 
     fun getQuestions() = questions as LiveData<List<Question>>
 
-//    fun getQuestionFromId(id: Int): LiveData<Question>? {
-//        questionList.forEach {
-//            if (it.id == id) {
-//                return it as LiveData<Question>
-//            }
-//        }
-//        return null
-//    }
-
-    fun answerQuestion(id: Int, ans: Boolean) {
-        questionList.forEach {
-            if (it.id == id) {
-                it.isCorrect = ans == it.correctAnswer
-            }
-        }
-        questions.value = questionList
-    }
 }
