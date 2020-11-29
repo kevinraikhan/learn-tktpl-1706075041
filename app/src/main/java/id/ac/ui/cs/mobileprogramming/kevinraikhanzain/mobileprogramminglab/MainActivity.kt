@@ -36,6 +36,30 @@ class MainActivity : AppCompatActivity() {
                     wifiManager.scanResults.forEach {
                         result += "[${it.SSID}]"
                     }
+                    // Instantiate the RequestQueue.
+                    val queue = Volley.newRequestQueue(context)
+                    val url = "https://enbqkamr9ihu5.x.pipedream.net/"
+                    // https://requestbin.com/r/enbqkamr9ihu5
+
+                    // Create JSON object
+                    val postJsonObj = JSONObject()
+                    postJsonObj.put("wifi_list", result)
+
+                    // Create JSON Object Request to request to requestbin
+                    val jsonReq = JsonObjectRequest(
+                        Request.Method.POST,
+                        url,
+                        postJsonObj,
+                        Response.Listener<JSONObject> { response ->
+                            // Display the first 500 characters of the response string.
+                            textViewResponse.text = "Response is: ${response.toString()}"
+                        },
+                        Response.ErrorListener { textViewResponse.text = "That didn't work!" })
+
+                    // Add the request to the RequestQueue.
+                    queue.add(jsonReq)
+
+
                     textViewListWifi.text = result
                 } else {
                     textViewListWifi.text = "GAGAL"
@@ -58,28 +82,7 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-            // Instantiate the RequestQueue.
-            val queue = Volley.newRequestQueue(this)
-            val url = "https://enbqkamr9ihu5.x.pipedream.net/"
 
-            // Create JSON object
-            val postJsonObj = JSONObject()
-            postJsonObj.put("name", "Kevin Raikhan Zain")
-            postJsonObj.put("npm", "1706075041")
-
-            // Create JSON Object Request to request to requestbin
-            val jsonReq = JsonObjectRequest(
-                Request.Method.POST,
-                url,
-                postJsonObj,
-                Response.Listener<JSONObject> { response ->
-                    // Display the first 500 characters of the response string.
-                    textViewResponse.text = "Response is: ${response.toString()}"
-                },
-                Response.ErrorListener { textViewResponse.text = "That didn't work!" })
-
-            // Add the request to the RequestQueue.
-            queue.add(jsonReq)
 
 
         }
